@@ -391,7 +391,7 @@ header {
     background-color: #f5f5f5;
     overflow: hidden;
     min-height: 484px;
-    margin-bottom: 50px;
+    padding-bottom: 50px;
 }
 
 .content h2 {
