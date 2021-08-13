@@ -1,12 +1,12 @@
-var resultBtn = document.querySelector('#result-btn');
-var tallObj = document.querySelector('#tall');
-var weightObj = document.querySelector('#weight');
-var restbtnObj = document.querySelector("#rest-btn")
-var clearbtnObj = document.querySelector("#clear-btn")
-var renderBmiObj = document.querySelector('.render-bmi');
+let resultBtn = document.querySelector('#result-btn');
+let tallObj = document.querySelector('#tall');
+let weightObj = document.querySelector('#weight');
+let restbtnObj = document.querySelector("#rest-btn");
+let clearbtnObj = document.querySelector("#clear-btn");
+let renderBmiObj = document.querySelector('.render-bmi');
 
 // 取出原本的資料
-var localData = JSON.parse(localStorage.getItem('bmiList')) || [];
+let localData = JSON.parse(localStorage.getItem('bmiList')) || [];
 
 
 // 畫面一載入就先render
@@ -27,7 +27,7 @@ clearbtnObj.addEventListener('click', function(e) {
 //刪除單一筆資料
 renderBmiObj.addEventListener('click',function(e) {
     e.preventDefault();
-    var NUM = e.target.dataset.num;
+    let NUM = e.target.dataset.num;
 
     if(e.target.nodeName !== 'BUTTON'){return}
   
@@ -38,8 +38,8 @@ renderBmiObj.addEventListener('click',function(e) {
 
 // 對看結果偵聽click事件
 resultBtn.addEventListener('click', function(e) {
-	var tallNum = tallObj.value;
-	var weightNum = weightObj.value;
+	let tallNum = tallObj.value;
+	let weightNum = weightObj.value;
 
 	// 輸入空值或不是數字型態就擋下
 	if (!tallNum || !weightNum || isNaN(tallNum) || isNaN(weightNum)) {
@@ -47,10 +47,10 @@ resultBtn.addEventListener('click', function(e) {
 		return;
 	}
 	// 輸入正確後開始計算BMI值
-	var bmi = caclBMI(tallNum, weightNum);
+	let bmi = caclBMI(tallNum, weightNum);
 
 	// 計算日期
-	var today = getToday();
+	let today = getToday();
 
 	// 執行塞值到localStorage
 	setLocalStorage(tallNum, weightNum, bmi, today);
@@ -67,7 +67,7 @@ resultBtn.addEventListener('click', function(e) {
 //計算BMI
 function caclBMI(tallNum, weightNum) {
 	// 身高除100換算成公尺再平方
-	var bmi = weightNum / (Math.pow(tallNum / 100, 2));
+	let bmi = weightNum / (Math.pow(tallNum / 100, 2));
 	// 取到小數點第二位四捨五入
 	bmi = bmi.toFixed(2);
 	return bmi;
@@ -75,10 +75,10 @@ function caclBMI(tallNum, weightNum) {
 
 // 取得今天日期
 function getToday() {
-	var myDate = new Date();
-	var year = myDate.getFullYear();
-	var month = (myDate.getMonth() + 1).toString();
-	var date = (myDate.getDate()).toString();
+	let myDate = new Date();
+	let year = myDate.getFullYear();
+	let month = (myDate.getMonth() + 1).toString();
+	let date = (myDate.getDate()).toString();
 	// 若為個位數要補0
 	month = month.length > 1 ? 'month' : '0' + month;
 	date = date.length > 1 ? 'date' : '0' + date;
@@ -87,7 +87,7 @@ function getToday() {
 // set
 function setLocalStorage(tallNum, weightNum, bmi, today) {
 	// 將參數放到物件
-	var bmiObj = {};
+	let bmiObj = {};
 	bmiObj.bmi = bmi;
 	bmiObj.height = tallNum + "cm";
 	bmiObj.weight = weightNum + "kg";
@@ -137,7 +137,6 @@ function setLocalStorage(tallNum, weightNum, bmi, today) {
 	renderBMI(localData);
 	// 渲染icon-loop畫面
 	resultShow(bmiObj);
-
 }
 
 // 渲染icon-loop畫面
@@ -150,11 +149,11 @@ function resultShow(bmiObj) {
 // 渲染畫面
 function renderBMI(localData) {
     
-	var strHtml = "";
+	let strHtml = "";
 
 	// 做法是將temlplate的html內的keyword做替換
-	for (var i = 0; i < localData.length; i++) {
-		var tempHtml = '<li><div class="{{colorClass}}}"></div><div class="bmi-bar" ><span class="bmi-index-1">{{word}}</span><span class="bmi-index-2 h6">BMI</span><span class="bmi-index-3">{{bmi}}</span><span class="bmi-index-6 h6">height</span><span class="bmi-index-7">{{height}}</span><span class="bmi-index-4 h6">weight</span><span class="bmi-index-5">{{weight}}</span><span class="bmi-index-8 h6">{{date}}</span><span class="del"><button data-num="'+i+'">✕刪除</button></span></div></li>';
+	for (let i = 0; i < localData.length; i++) {
+		let tempHtml = '<li><div class="{{colorClass}}}"></div><div class="bmi-bar" ><span class="bmi-index-1">{{word}}</span><span class="bmi-index-2 h6">BMI</span><span class="bmi-index-3">{{bmi}}</span><span class="bmi-index-6 h6">height</span><span class="bmi-index-7">{{height}}</span><span class="bmi-index-4 h6">weight</span><span class="bmi-index-5">{{weight}}</span><span class="bmi-index-8 h6">{{date}}</span><span class="del"><button data-num="'+i+'">✕刪除</button></span></div></li>';
 		tempHtml = tempHtml.replace('{{colorClass}}}', localData[i].colorClass)
 			.replace('{{word}}', localData[i].word)
 			.replace('{{bmi}}', localData[i].bmi)
