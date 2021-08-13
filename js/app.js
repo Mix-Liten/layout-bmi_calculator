@@ -80,8 +80,8 @@ function getToday() {
 	let month = (myDate.getMonth() + 1).toString();
 	let date = (myDate.getDate()).toString();
 	// 若為個位數要補0
-	month = month.length > 1 ? 'month' : '0' + month;
-	date = date.length > 1 ? 'date' : '0' + date;
+	month = month.length > 1 ? month : '0' + month;
+	date = date.length > 1 ? date : '0' + date;
 	return month + '-' + date + '-' + year;
 }
 // set

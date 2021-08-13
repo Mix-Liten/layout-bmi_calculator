@@ -413,10 +413,9 @@ header {
 }
 
 .render-bmi li .bmi-bar {
-    width: 675px;
+    width: calc(100% - 7px);
     background-color: #fff;
     display: inline-block;
-    float: left;
     position: relative;
 }
 
